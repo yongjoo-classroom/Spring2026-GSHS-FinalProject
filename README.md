@@ -7,7 +7,7 @@ In this assignment, you will study how the Gradient Descent algorithm for linear
 
 ## Objective
 
-You can use the provided starter code `gradient_descent_scalability.py` to run the experiments and generate the required plots that illustrate how the convergence behavior and runtime of Gradient Descent vary as the problem size increases.
+Submit a written report on the scalability of gradient descent using the format provided in `final_report_template.zip`. You can use the provided starter code `gradient_descent_scalability.py` to run the experiments and generate plots that illustrate how the convergence behavior and runtime of gradient descent vary as the problem size increases.
 
 1. **Data Generation**\
 The function `generate_data(n, d)` creates a synthetic regression dataset using the below model.
