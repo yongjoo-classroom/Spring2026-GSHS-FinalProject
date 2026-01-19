@@ -150,7 +150,7 @@ def experiment_1():
 
         iterations_avg.append(np.mean(trial_iters))
 
-    plot_graphs(sizes, iterations_avg, "Number of Data Points", "Average Iterations to Converge", "Iterations to Converge vs Number of Data Points")
+    plot_graphs(sizes, iterations_avg, "Number of Data Points", "Average Iterations to Converge", f"Iterations to Converge vs Number of Data Points({trials} trials)")
 
 def experiment_2():
     """
@@ -182,7 +182,7 @@ def experiment_2():
 
         times_avg.append(np.mean(trials_times))
 
-    plot_graphs(dimensions, times_avg, "Number of Features", "Time to Converge (seconds)", "Time to Converge vs Number of Features")
+    plot_graphs(dimensions, times_avg, "Number of Features", "Time to Converge (seconds)", f"Time to Converge vs Number of Features({trials} trials)")
 
 if __name__ == "__main__":
     experiment_1()
