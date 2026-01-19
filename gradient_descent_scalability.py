@@ -138,14 +138,19 @@ def experiment_1():
     gradient descent iterations required for convergence.
     """
     sizes = [100, 500, 1000, 5000, 10000]
-    iterations = []
+    iterations_avg = []
+    trials = 30
 
     for n in sizes:
-        X, y = generate_data(n, d=5)
-        iters, _ = gradient_descent(X, y)
-        iterations.append(iters)
+        trial_iters = []
+        for i in range(trials):
+            X, y = generate_data(n, d=5)
+            iters, _ = gradient_descent(X, y)
+            trial_iters.append(iters)
 
-    plot_graphs(sizes, iterations, "Number of Data Points", "Iterations to Converge", "Iterations to Converge vs Number of Data Points")
+        iterations_avg.append(np.mean(trial_iters))
+
+    plot_graphs(sizes, iterations_avg, "Number of Data Points", "Average Iterations to Converge", "Iterations to Converge vs Number of Data Points")
 
 def experiment_2():
     """
@@ -157,24 +162,27 @@ def experiment_2():
     number of features, measuring the total runtime until convergence.
     """
     dimensions = [1, 5, 10, 20, 50, 100]
-    times = []
+    times_avg= []
+    trials = 30
 
     # Implement your code here
     n_data = 10000
 
     for d in dimensions:
-        x, y = generate_data(n_data, d)
+        trials_times = []
+        for i in range(trials):
+            X, y = generate_data(n_data, d)
 
-        time_start = time.time()
+            time_start = time.time()
 
-        gradient_descent(X, y)
+            gradient_descent(X, y)
 
-        time_end = time.time()
-        time_lead = time_end - time_start
-        times.append(time_lead)
-        print(f"Features: {d}, Time: {elapsed_time:.4f}s")
+            time_end = time.time()
+            trials_times.append(time_end-time_start)
 
-    plot_graphs(dimensions, times, "Number of Features", "Time to Converge (seconds)", "Time to Converge vs Number of Features")
+        times_avg.append(np.mean(trials_times))
+
+    plot_graphs(dimensions, times_avg, "Number of Features", "Time to Converge (seconds)", "Time to Converge vs Number of Features")
 
 if __name__ == "__main__":
     experiment_1()
