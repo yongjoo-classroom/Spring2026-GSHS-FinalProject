@@ -102,6 +102,14 @@ def gradient_descent(X, y, lr=0.1, tolerance=1e-6, max_epochs=5000):
     prev_loss = float('inf')
 
     # Implement your code here
+    for epoch in range(max_epochs):
+        loss = f(w, X, y)
+
+        if abs(prev_loss - loss) < tolerance:
+            return epoch, loss
+        prev_loss = loss
+
+        w = w - lr * df(w, X, y)
 
     return max_epochs, loss
 
@@ -152,6 +160,19 @@ def experiment_2():
     times = []
 
     # Implement your code here
+    n_data = 10000
+
+    for d in dimensions:
+        x, y = generate_data(n_data, d)
+
+        time_start = time.time()
+
+        gradient_descent(X, y)
+
+        time_end = time.time()
+        time_lead = time_end - time_start
+        times.append(time_lead)
+        print(f"Features: {d}, Time: {elapsed_time:.4f}s")
 
     plot_graphs(dimensions, times, "Number of Features", "Time to Converge (seconds)", "Time to Converge vs Number of Features")
 
