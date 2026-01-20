@@ -139,7 +139,7 @@ def experiment_1():
     """
     sizes = [100, 500, 1000, 5000, 10000]
     iterations_avg = []
-    trials = 30
+    trials = 100
 
     for n in sizes:
         trial_iters = []
@@ -163,7 +163,7 @@ def experiment_2():
     """
     dimensions = [1, 5, 10, 20, 50, 100]
     times_avg= []
-    trials = 30
+    trials = 100
 
     # Implement your code here
     n_data = 10000
