@@ -102,6 +102,14 @@ def gradient_descent(X, y, lr=0.1, tolerance=1e-6, max_epochs=5000):
     prev_loss = float('inf')
 
     # Implement your code here
+    for epoch in range(max_epochs):
+        loss = f(w, X, y)
+
+        if abs(prev_loss - loss) < tolerance:
+            return epoch, loss
+        prev_loss = loss
+
+        w = w - lr * df(w, X, y)
 
     return max_epochs, loss
 
@@ -130,14 +138,19 @@ def experiment_1():
     gradient descent iterations required for convergence.
     """
     sizes = [100, 500, 1000, 5000, 10000]
-    iterations = []
+    iterations_avg = []
+    trials = 100
 
     for n in sizes:
-        X, y = generate_data(n, d=5)
-        iters, _ = gradient_descent(X, y)
-        iterations.append(iters)
+        trial_iters = []
+        for i in range(trials):
+            X, y = generate_data(n, d=5)
+            iters, _ = gradient_descent(X, y)
+            trial_iters.append(iters)
 
-    plot_graphs(sizes, iterations, "Number of Data Points", "Iterations to Converge", "Iterations to Converge vs Number of Data Points")
+        iterations_avg.append(np.mean(trial_iters))
+
+    plot_graphs(sizes, iterations_avg, "Number of Data Points", "Average Iterations to Converge", f"Iterations to Converge vs Number of Data Points({trials} trials)")
 
 def experiment_2():
     """
@@ -149,11 +162,27 @@ def experiment_2():
     number of features, measuring the total runtime until convergence.
     """
     dimensions = [1, 5, 10, 20, 50, 100]
-    times = []
+    times_avg= []
+    trials = 100
 
     # Implement your code here
+    n_data = 10000
 
-    plot_graphs(dimensions, times, "Number of Features", "Time to Converge (seconds)", "Time to Converge vs Number of Features")
+    for d in dimensions:
+        trials_times = []
+        for i in range(trials):
+            X, y = generate_data(n_data, d)
+
+            time_start = time.time()
+
+            gradient_descent(X, y)
+
+            time_end = time.time()
+            trials_times.append(time_end-time_start)
+
+        times_avg.append(np.mean(trials_times))
+
+    plot_graphs(dimensions, times_avg, "Number of Features", "Time to Converge (seconds)", f"Time to Converge vs Number of Features({trials} trials)")
 
 if __name__ == "__main__":
     experiment_1()
