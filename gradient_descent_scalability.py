@@ -21,7 +21,6 @@ def gradient_descent(X, y, lr=0.1, tolerance=1e-6, max_epochs=5000):
     n, d = X.shape
     w = np.zeros(d)
     prev_loss = float("inf")
-    loss = prev_loss
 
     for epoch in range(max_epochs):
         loss = f(w, X, y)
@@ -33,15 +32,15 @@ def gradient_descent(X, y, lr=0.1, tolerance=1e-6, max_epochs=5000):
 
     return max_epochs, loss
 
-def plot_graphs(x_vals, y_vals, x_label, y_label, title):
-    plt.plot(x_vals, y_vals, marker="o")
-    plt.xlabel(x_label)
-    plt.ylabel(y_label)
+def plot_graphs(x, y, xlabel, ylabel, title):
+    plt.plot(x, y, marker="o")
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
     plt.title(title)
     plt.grid(True)
     plt.show()
 
-def experiment_1():
+def experiment_convergence_vs_data_size():
     sizes = [100, 500, 1000, 5000, 10000]
     iterations = []
 
@@ -50,15 +49,19 @@ def experiment_1():
         iters, _ = gradient_descent(X, y)
         iterations.append(iters)
 
+    print("Iterations vs Number of Data Points")
+    for n, it in zip(sizes, iterations):
+        print(f"(n={n}, iterations={it})")
+
     plot_graphs(
         sizes,
         iterations,
         "Number of Data Points",
         "Iterations to Converge",
-        "Iterations to Converge vs Number of Data Points",
+        "Convergence vs Data Size"
     )
 
-def experiment_2():
+def experiment_runtime_vs_num_features():
     dimensions = [1, 5, 10, 20, 50, 100]
     times = []
     n_fixed = 5000
@@ -70,14 +73,18 @@ def experiment_2():
         t1 = time.perf_counter()
         times.append(t1 - t0)
 
+    print("\nRuntime vs Number of Features")
+    for d, t in zip(dimensions, times):
+        print(f"(d={d}, runtime={t})")
+
     plot_graphs(
         dimensions,
         times,
         "Number of Features",
-        "Time to Converge (seconds)",
-        "Time to Converge vs Number of Features",
+        "Runtime (seconds)",
+        "Runtime vs Number of Features"
     )
 
 if __name__ == "__main__":
-    experiment_1()
-    experiment_2()
+    experiment_convergence_vs_data_size()
+    experiment_runtime_vs_num_features()
