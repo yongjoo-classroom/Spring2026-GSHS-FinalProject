@@ -100,10 +100,17 @@ def gradient_descent(X, y, lr=0.1, tolerance=1e-6, max_epochs=5000):
     n, d = X.shape
     w = np.zeros(d)
     prev_loss = float('inf')
-
-    # Implement your code here
-
-    return max_epochs, loss
+    epoch=0
+    while True:
+        loss=f(w,X,y)
+        if abs(prev_loss-loss)<tolerance or epoch>=max_epochs:
+            break
+        epoch+=1
+        grad=df(w,X,y)
+        grad = np.clip(grad, -1e3, 1e3)
+        w-=lr*grad
+        prev_loss=loss
+    return epoch, loss
 
 def plot_graphs(x_vals, y_vals, x_label, y_label, title):
     """
@@ -151,10 +158,30 @@ def experiment_2():
     dimensions = [1, 5, 10, 20, 50, 100]
     times = []
 
-    # Implement your code here
+    for d in dimensions:
+        X,y=generate_data(n=1000,d=d)
+        start=time.time()
+        result=gradient_descent(X,y)
+        end=time.time()
+        times.append(end-start)
+        
 
     plot_graphs(dimensions, times, "Number of Features", "Time to Converge (seconds)", "Time to Converge vs Number of Features")
-
+def experiment_3():
+    lrs = [0.0005, 0.001, 0.005, 0.01, 0.05, 0.1, 0.2, 0.5, 1]
+    iters = []
+    times=[]
+    for lr in lrs:
+        X,y=generate_data(n=1000,d=10)
+        start=time.time()
+        iter, loss=gradient_descent(X,y,lr=lr)
+        end=time.time()
+        iters.append(iter)
+        times.append(end-start)
+    plot_graphs(lrs, times, "learnig rate", "Time to Converge (seconds)", "Time to Converge vs learnig rate")
+    plot_graphs(lrs, iters, "learnig rate", "Iterations to Converge", "Iterations to Converge vs learnig rate")
 if __name__ == "__main__":
     experiment_1()
     experiment_2()
+    experiment_3()
+

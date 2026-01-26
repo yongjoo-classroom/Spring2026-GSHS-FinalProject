@@ -1,0 +1,23 @@
+\begin{figure}[t]
+\centering
+
+\begin{tikzpicture}
+    \begin{axis}[
+        width=60mm,
+        height=45mm,
+        xlabel={Problem Size},
+        ylabel={Value},
+        ymin=0,
+        ymax=10,
+        symbolic x coords={A, B, C, D, E},
+        xtick=data,
+        grid=major,
+        mark=*,
+        line width=1pt
+    ]
+        \addplot coordinates {(A,3) (B,7) (C,5) (D,9) (E,6)};
+    \end{axis}
+\end{tikzpicture}
+
+\caption{Describe your figure using a few sentences.}
+\end{figure}
